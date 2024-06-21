@@ -11,7 +11,7 @@
           :to="{name:'edit-task',params:{id:item.id}}"
           asLink
           style="margin-right: 15px;margin-top:15px">
-      <template #header>Название задачи: {{ item.nameTask }}</template>
+      <template #header>Название задачи: {{ item.nameTask }}, ID - {{ item.id }}</template>
       <template #body>
         <div>
           <Typography as="p">Статус: {{ item.status ? item.status : 'пусто' }}</Typography>
@@ -26,7 +26,7 @@
           <Typography as="p">Tags: {{ item.tags ? item.tags : 'пусто' }}</Typography>
         </div>
       </template>
-      <template #footer>2</template>
+
     </Card>
 
   </div>

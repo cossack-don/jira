@@ -16,7 +16,7 @@ export const useStoreTasks = defineStore('storeTasks', () => {
         "typeTask": "",
         "id": 33,
         "title": "Item A",
-        "list": 7
+        "list": 0
     },
         {
             "nameTask": "Создать АПИ",
@@ -30,7 +30,7 @@ export const useStoreTasks = defineStore('storeTasks', () => {
             "typeTask": "",
             "id": 1,
             "title": "Item A",
-            "list": 7
+            "list": 0
         }])
 
     const setStateTasks = (payload) => stateTasks.value.push(payload)

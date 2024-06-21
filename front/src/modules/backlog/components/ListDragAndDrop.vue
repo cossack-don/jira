@@ -43,8 +43,8 @@ const formatDate = (date: string | Date) => {
 
   return formattedDate
 }
-const arr = ['1-й спринт',
-  '2-й спринт', "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Беклог"
+const arr = ['Беклог',
+  '1-й спринт', "2-й",
 ]
 const {items, sort} = defineProps({
   items: {
