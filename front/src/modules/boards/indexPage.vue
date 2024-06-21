@@ -1,0 +1,1 @@
+<tempalte>index page</tempalte>

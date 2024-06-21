@@ -1,0 +1,33 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.global-mr-5 {
+    margin-right: 5px;
+}
+
+.global-mr-15 {
+    margin-right: 15px;
+}
+
+.global-mb-15 {
+    margin-bottom: 15px;
+}
+
+
+#app {
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+:root {
+    --green: #17c964;
+    --blue: #006fee;
+    --gray: #d4d4d8;
+    --yellow: #f5a524;
+}
