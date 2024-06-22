@@ -2,55 +2,55 @@
   <Typography as="h4">Редактирование задачи</Typography>
   <Button @click="router.push({name:'all-tasks'})">Назад</Button>
 
-  <pre> {{ cardInfoById[0] }}</pre>
+  <pre> {{ currentTask[0] }}</pre>
 
   <div>
     <Input
-        :model-value="cardInfoById[0]?.nameTask"
+        :model-value="currentTask[0]?.nameTask"
         placeholder="Название задачи"
         text-label="Название задачи"
         @update:model-value="handlerUpdateField($event,'nameTask')"
     />
     <TextArea
-        :model-value="cardInfoById[0]?.comment"
+        :model-value="currentTask[0]?.comment"
         placeholder="Описание задачи"
         text-label="Описание задачи"
         @update:model-value="handlerUpdateField($event,'descriotion')"
     />
     <Input
-        :model-value="cardInfoById[0].storyPoint"
+        :model-value="currentTask[0].storyPoint"
         placeholder="Story Point"
         text-label="Story Points"
         @update:model-value="handlerUpdateField($event,'storyPoint')"
     />
 
-    <!--    <Select-->
-    <!--        :items="statusesTask"-->
-    <!--        :model-value="cardInfoById[0].priority.text"-->
-    <!--        text-label="Статус"-->
-    <!--        @update:modelValue="updateSelect"-->
-    <!--    />-->
-
-
-    <!--    {{ activeSelectTypesTask }}-->
     <Select
-        :items="typesTask"
+        :items="listPrioritySelect"
+        :model-value="pickedPriorityInSelect"
+        text-label="Приоритет"
+        @update:modelValue="handlerUpdatePrioritySelect"
+    />
+
+    <Select
+        :items="typesTasksSelect"
         :model-value="selectedTypeTask"
         text-label="Тип задачи"
         @update:modelValue="handlerUpdateTypeTaskSelect"
     />
 
     <Input
-        :model-value="cardInfoById[0].storyPoint"
+        :model-value="currentTask[0].version"
         placeholder="Version"
         text-label="Версия"
         type="number"
         @update:model-value="handlerUpdateField($event,'version')"
     />
 
-    <Button @click="handlerCreateTask">Создать</Button>
+    <Button @click="handlerCreateTask">Сохранить</Button>
 
   </div>
+
+
 </template>
 
 <script lang="ts" setup>
@@ -58,45 +58,30 @@ import {onMounted} from "vue";
 import {Typography, Button, Input, Select, TextArea} from '*/ui/'
 import {useRoute, useRouter} from "vue-router";
 import {useStoreTasks} from "@/modules/tasks/useStoreTasks";
-import {computed, reactive, ref} from "vue";
-import {statusesSelect} from "*/ui/statusesSelect";
+import {computed, ref} from "vue";
 import {typesTasksSelect} from "*/ui/typesTasksSelect";
+import {listPrioritySelect} from '*/ui/listPrioritySelect'
 
 const storeTasks = useStoreTasks()
 const router = useRouter()
 const route = useRoute()
 
-const currentTask = computed(() => {
-  return storeTasks.stateTasks.filter((el) => el.id === Number(route.params.id))
-})
-const selected = ref({text: 'Высокий', value: 'top'})
-const typesTask = ref(typesTasksSelect)
+const currentTask = computed(() => storeTasks?.stateTasks.filter((el) => el.id === Number(route.params.id)))
+
+
+const pickedPriorityInSelect = ref({})
+onMounted(() => pickedPriorityInSelect.value = getCurrentObjectSelect2[0])
+const getCurrentObjectSelect2 = listPrioritySelect.filter((item) => item.value === currentTask.value[0].priority)
+const handlerUpdatePrioritySelect = (e) => Object.assign(currentTask.value[0], {priority: e.value})
+
 
 const selectedTypeTask = ref({})
-
-const getCurrentTaskById = storeTasks?.stateTasks?.filter((el) => el.id === Number(route.params.id))
-const getCurrentObjectSelect = typesTasksSelect.filter((item) => item.value === getCurrentTaskById[0].typeTask)
-
-onMounted(() => {
-  selectedTypeTask.value = getCurrentObjectSelect[0]
-})
-
-const handlerUpdateTypeTaskSelect = (e) => {
-  selectedTypeTask.value = e
-  Object.assign(currentTask.value[0], {typeTask: selectedTypeTask.value.value})
-}
-
-const updateSelect = (e) => {
-  selected.value = e
-  console.log(e, 3)
-  Object.assign(currentTask[0], {priority: selected.value.value})
-}
-const statusesTask = ref(statusesSelect)
+onMounted(() => selectedTypeTask.value = getCurrentObjectSelect[0])
+const getCurrentObjectSelect = typesTasksSelect.filter((item) => item.value === currentTask.value[0].typeTask)
+const handlerUpdateTypeTaskSelect = (e) => Object.assign(currentTask.value[0], {typeTask: e.value})
 
 
-const cardInfoById = computed(() => storeTasks.stateTasks.filter((el) => el.id === Number(route.params.id)))
-
-const handlerUpdateField = (event: Event, field: string) => Object.assign(currentTask[0], {[`${field}`]: event})
+const handlerUpdateField = (event: Event, field: string | number) => Object.assign(currentTask.value[0], {[`${field}`]: event})
 
 const handlerCreateTask = () => router.push({name: 'all-tasks'})
 </script>

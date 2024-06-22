@@ -1,5 +1,5 @@
 export const statusesSelect = [
-    {text: 'Высокий', value: 'top'},
-    {text: 'Средний', value: 'medium'},
-    {text: 'Низкий', value: 'low'}
+    {text: 'Выполнена', value: 'done'},
+    {text: 'В работе', value: 'inProgress'},
+    // {text: 'Низкий', value: 'low'}
 ]
