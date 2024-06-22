@@ -11,6 +11,8 @@ import CheckBox from '../../../../pkgs/ui/CheckBox.vue'
 import TextArea from '../../../../pkgs/ui/TextArea.vue'
 import {useStoreBacklog} from "@/modules/backlog/store/useStoreBacklog";
 import {useStoreTasks} from "@/modules/tasks/useStoreTasks";
+import {statusesSelect} from "*/ui/statusesSelect";
+import {typesTasksSelect} from "*/ui/typesTasksSelect";
 
 const valueInput = ref('')
 const router = useRouter()
@@ -86,8 +88,6 @@ enum EnumDaysWeek {
 
 const selected = ref({text: 'Высокий', value: 'top'})
 
-
-let idCounter = ref(0)
 const dataForm = reactive({
   nameTask: '',
   descriotion: '',
@@ -110,13 +110,7 @@ const dataForm = reactive({
 const handlerUpdateField = (event: Event, field: string) => Object.assign(dataForm, {[`${field}`]: event})
 
 
-const typesTask = ref([
-  {text: 'Задача', value: 'task'},
-  {text: 'Баг', value: 'bug'},
-  {text: 'Поразмыслить', value: 'reflect'},
-  {text: 'Эпик', value: 'epic'},
-  {text: 'Сторя', value: 'story'}
-])
+const typesTask = ref(typesTasksSelect)
 
 const selectedTypeTask = ref({text: 'Задача', value: 'task'},)
 const handlerUpdateTypeTaskSelect = (e) => {
@@ -124,11 +118,7 @@ const handlerUpdateTypeTaskSelect = (e) => {
   Object.assign(dataForm, {typeTask: selected.value.value})
 }
 
-const statusesTask = ref([
-  {text: 'Высокий', value: 'top'},
-  {text: 'Средний', value: 'medium'},
-  {text: 'Низкий', value: 'low'}
-])
+const statusesTask = ref(statusesSelect)
 
 const updateSelect = (e) => {
   selected.value = e
@@ -140,7 +130,7 @@ const handlerCreateTask = () => {
 
 
   storeTasks.setStateTasks(dataForm)
-
+  router.push({name: 'all-tasks'})
 }
 
 

@@ -27,7 +27,7 @@ export const useStoreTasks = defineStore('storeTasks', () => {
             "status": "",
             "version": "",
             "tags": [],
-            "typeTask": "",
+            "typeTask": "epic",
             "id": 1,
             "title": "Item A",
             "list": 0

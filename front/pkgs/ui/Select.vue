@@ -18,7 +18,7 @@
 
 <script lang="ts" setup>
 interface Props {
-  modelValue: {},
+  modelValue: {} | string,
   items: [],
   type?: string
   textLabel?: string
@@ -41,7 +41,6 @@ const emit = defineEmits(['update:modelValue'])
 const handlerUpdateValueInput = (event: Event) => {
   const {value} = event.target
   const result = props.items.filter((el) => el.value === value)
-
   emit('update:modelValue', result[0])
 }
 
