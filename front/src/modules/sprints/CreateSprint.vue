@@ -26,7 +26,16 @@ const handerCreateBoard = () => {
       orientation: 'vertical',
       className: 'card-container',
     },
-    children: [],
+    children: [{
+      type: 'draggable',
+      id: `1`,
+      props: {
+        className: 'card',
+        style: {backgroundColor: 'gray'},
+      },
+      number: `Номер задачи 5`,
+      data: 'описание задачи22',
+    }],
   }
   storeSprints.handlerAddNewSprintInState(g)
   router.push({name: 'sprints'})

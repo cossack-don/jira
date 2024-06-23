@@ -8,9 +8,10 @@
         @drop="onColumnDrop($event)"
         @drag-start="dragStart"
     >
+      <pre>  {{ scene.children.id }}</pre>
       <Draggable v-for="column in scene.children" :key="column.id" style="background: red;margin-bottom:15px">
         <div :class="column.props.className">
-          <div class="card-column-header">
+          <div class="card-column-header" @click="handlerEditSprint(column.id)">
             <span class="column-drag-handle">&#x2630;</span>
             {{ column.name }}
           </div>
@@ -42,113 +43,9 @@
 <script>
 import {Container, Draggable} from "vue-dndrop";
 import {useStoreSprints} from "@/modules/sprints/useStoreSprints";
+import {useRouter} from "vue-router";
 
-export const lorem = `Lorem ipsum dolor sit amet,
-consectetur adipiscing elit, sed do eiusmod tempor
-incididunt ut labore et dolore magna aliqua.`;
-
-const columnNames = ['Backlog', 'Doing', 'Finished', 'fff', 'gg'];
-
-const cardColors = [
-  '#34495E',
-  '#84B0DC',
-  '#49627A',
-  '#41B883',
-  '#7096BB',
-  '#97CAFC',
-  '#6CC1C0',
-  '#41B883',
-  '#41B883',
-  '#49627A',
-];
-
-const pickColor = () => {
-  const rand = Math.floor(Math.random() * 10);
-  return cardColors[rand];
-};
-
-export const generateItems = (count, creator) => {
-
-  const result = [];
-  for (let i = 0; i < count; i++) {
-    result.push(creator(i));
-  }
-  return result;
-};
-
-// storeSprints.stateSprints
 const storeSprints = useStoreSprints()
-const children = [
-  {
-    id: `1`,
-    type: 'container',
-    name: 'Беклог',
-    props: {
-      orientation: 'vertical',
-      className: 'card-container',
-    },
-    children: [
-      {
-        type: 'draggable',
-        id: `1`,
-        props: {
-          className: 'card',
-          style: {backgroundColor: 'gray'},
-        },
-        number: `Номер задачи 1`,
-        data: 'описание задачи22',
-      },
-      {
-        type: 'draggable',
-        id: `1`,
-        props: {
-          className: 'card',
-          style: {backgroundColor: 'gray'},
-        },
-        number: `Номер задачи 5`,
-        data: 'описание задачи22',
-      }
-    ],
-  },
-  {
-    id: `2`,
-    type: 'container',
-    name: 'Первый спринт',
-    props: {
-      orientation: 'vertical',
-      className: 'card-container',
-    },
-    children: [{
-      type: 'draggable',
-      id: `1`,
-      props: {
-        className: 'card',
-        style: {backgroundColor: 'gray'},
-      },
-      number: `Номер задачи 5`,
-      data: 'описание задачи22',
-    }],
-  },
-  {
-    id: `3`,
-    type: 'container',
-    name: 'Второй Спринт',
-    props: {
-      orientation: 'vertical',
-      className: 'card-container',
-    },
-    children: [{
-      type: 'draggable',
-      id: `1`,
-      props: {
-        className: 'card',
-        style: {backgroundColor: 'gray'},
-      },
-      number: `Номер задачи 5`,
-      data: 'описание задачи22',
-    }],
-  },
-];
 
 export const scene = {
   type: 'container',
@@ -156,66 +53,6 @@ export const scene = {
     orientation: 'horizontal',
   },
   children: storeSprints.stateSprints,
-
-  // children: [
-  //   {
-  //     id: `column${0}`,
-  //     type: 'container',
-  //     name: columnNames[0],
-  //     props: {
-  //       orientation: 'vertical',
-  //       className: 'card-container',
-  //     },
-  //     children: [{
-  //       type: 'draggable',
-  //       id: `1`,
-  //       props: {
-  //         className: 'card',
-  //         style: {backgroundColor: 'gray'},
-  //       },
-  //       number: `Номер задачи 5`,
-  //       data: 'описание задач111',
-  //     }],
-  //   },
-  //   {
-  //     id: `column${1}`,
-  //     type: 'container',
-  //     name: columnNames[1],
-  //     props: {
-  //       orientation: 'vertical',
-  //       className: 'card-container',
-  //     },
-  //     children: [{
-  //       type: 'draggable',
-  //       id: `1`,
-  //       props: {
-  //         className: 'card',
-  //         style: {backgroundColor: 'gray'},
-  //       },
-  //       number: `Номер задачи 5`,
-  //       data: 'описание задачи22',
-  //     }],
-  //   },
-  //   {
-  //     id: `column${2}`,
-  //     type: 'container',
-  //     name: columnNames[2],
-  //     props: {
-  //       orientation: 'vertical',
-  //       className: 'card-container',
-  //     },
-  //     children: [{
-  //       type: 'draggable',
-  //       id: `1`,
-  //       props: {
-  //         className: 'card',
-  //         style: {backgroundColor: 'gray'},
-  //       },
-  //       number: `Номер задачи 5`,
-  //       data: 'описание задачи22',
-  //     }],
-  //   }
-  // ]
 };
 
 
@@ -259,6 +96,11 @@ export default {
   },
 
   methods: {
+    handlerEditSprint(id) {
+      console.log(id)
+      this.$router.push({name: 'edit-sprint', params: {id}})
+      // this.router.push({name: 'edit-sprint', params: {id: id}})
+    },
     onColumnDrop(dropResult) {
       const scene = Object.assign({}, this.scene);
       scene.children = applyDrag(scene.children, dropResult);

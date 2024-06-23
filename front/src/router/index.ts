@@ -38,6 +38,11 @@ const router = createRouter({
                     path: '/sprints/create-sprint',
                     name: 'create-sprint',
                     component: () => import('@/modules/sprints/CreateSprint.vue')
+                },
+                {
+                    path: '/sprints/edit-sprint/:id',
+                    name: 'edit-sprint',
+                    component: () => import('@/modules/sprints/EditSprint.vue')
                 }
             ]
         },
