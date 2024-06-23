@@ -13,10 +13,10 @@
     Open Modal!
   </button>
 
-  <Modal
+  <!--  <Modal-->
 
-      @changeStateModal="changeStateModal"
-  />
+  <!--      @changeStateModal="changeStateModal"-->
+  <!--  />-->
   <!--  {{ storeBoards.stateBoards }}-->
   <!--  <pre>{{ storeBacklog.stateBacklogTasks }}</pre>-->
 
@@ -27,16 +27,45 @@
   <!--      {{ el.title }}-->
   <!--    </div>-->
   <!--  </div>-->
+  <!--  {{ storeSprints.stateSprints }}-->
   <ListDragAndDrop
-      :items="storeBacklog.stateBacklogTasks[0].list"/>
+
+
+  />
   <!--  <ListDragAndDrop-->
   <!--      :items="storeBacklog.stateBacklogTasks[0].list"/>-->
 </template>
 <script lang="ts" setup>
+
+const fc = ref([
+  {
+    "id": 0,
+    "title": "Item A",
+    "list": 2
+  },
+  {
+    "id": 2,
+    "title": "Item C",
+    "list": 3
+  },
+  // {
+  //   "id": 3,
+  //   "title": "Item D",
+  //   "list": 2
+  // },
+  // {
+  //   "id": 1,
+  //   "title": "Item B",
+  //   "list": 2
+  // }
+])
+import {useStoreSprints} from "@/modules/sprints/useStoreSprints";
+
+const storeSprints = useStoreSprints()
 import ListDragAndDrop from '@/modules/backlog/components/ListDragAndDrop.vue'
-import Button from '../../../../pkgs/ui/Button.vue'
+import {Button} from '*/ui'
 import {ref} from "vue";
-import Modal from '../../../../pkgs/ui/Modal.vue'
+// import Modal from '../../../../pkgs/ui/Modal.vue'
 import {useStoreBacklog} from "@/modules/backlog/store/useStoreBacklog";
 import {useRouter} from "vue-router";
 import {useStoreBoards} from "@/modules/boards/store/useStoreBoards";
@@ -55,7 +84,7 @@ const changeStateModal = (e) => {
 }
 
 const handlerMoveToCreateBoard = () => {
-  router.push({name: 'create-board'})
+  router.push({name: 'create-sprint'})
 }
 </script>
 

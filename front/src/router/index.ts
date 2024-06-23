@@ -26,19 +26,19 @@ const router = createRouter({
         },
 
         {
-            path: '/backlog',
+            path: '/sprints',
             component: () => import('@/modules/backlog/index.vue'),
             children: [
                 {
-                    path: '/backlog',
-                    name: 'f',
-                    component: () => import('@/modules/backlog/pages/AllTasks.vue'),
+                    path: '/sprints',
+                    name: 'sprints',
+                    component: () => import('@/modules/sprints/Sprints.vue'),
                 },
-                // {
-                //     path: '/backlog/create-task',
-                //     name: 'create-task',
-                //     component: () => import('@/modules/backlog/pages/CreateTask.vue')
-                // }
+                {
+                    path: '/sprints/create-sprint',
+                    name: 'create-sprint',
+                    component: () => import('@/modules/sprints/CreateSprint.vue')
+                }
             ]
         },
 

@@ -1,147 +1,299 @@
 <template>
-  <div class="demo">
-
-    <div
-        v-for="(EL,INDEX) in arr"
-        :key="INDEX"
-        class="drop-zone"
-        @drop="onDrop($event, INDEX )"
-        @dragenter.prevent
-        @dragover.prevent
+  <div>
+    <Container
+        :drop-placeholder="upperDropPlaceholderOptions"
+        drag-handle-selector=".column-drag-handle"
+        orientation="horizontal"
+        style="display: flex; flex-direction: column"
+        @drop="onColumnDrop($event)"
+        @drag-start="dragStart"
     >
-      <h3>{{ EL }}</h3>
-      <div
-          v-for="item in getList(INDEX)"
-          :key="item.id"
-          class="drag-el"
-          draggable="true"
-          style="display: flex; justify-content: space-between"
-          @dragstart="startDrag($event, item)"
-          @drop="onDropSort($event, item)"
-          @dragover.prevent="onOver($event)"
-          @dragleave.prevent="onLeave($event)"
-          @dragenter.prevent
-      >
+      <Draggable v-for="column in scene.children" :key="column.id" style="background: red;margin-bottom:15px">
+        <div :class="column.props.className">
+          <div class="card-column-header">
+            <span class="column-drag-handle">&#x2630;</span>
+            {{ column.name }}
+          </div>
+          <Container
+              :drop-placeholder="dropPlaceholderOptions"
 
+              :get-child-payload="getCardPayload(column.id)"
+              drag-class="card-ghost"
+              drop-class="card-ghost-drop"
+              group-name="col"
 
-        Название: {{ item.nameTask }}
-        Приоритет: {{ item.priority }}
-        Дата создания: {{ item.dateCreate }}
-
-        <Badge> SP: {{ item.storyPoint }}</Badge>
-      </div>
-    </div>
+              @drop="(e) => onCardDrop(column.id, e)"
+              @drag-start="(e) => log('drag start', e)"
+              @drag-end="(e) => log('drag end', e)"
+          >
+            <Draggable v-for="card in column.children" :key="card.id" style="margin-bottom: 15px">
+              <div :class="card.props.className" :style="card.props.style">
+                <h3>Task # {{ card.number }}</h3>
+                <p class="card-text">{{ card.data }}</p>
+              </div>
+            </Draggable>
+          </Container>
+        </div>
+      </Draggable>
+    </Container>
   </div>
 </template>
 
-<script lang="ts" setup>
-import Badge from '../../../../pkgs/ui/Badge.vue'
+<script>
+import {Container, Draggable} from "vue-dndrop";
+import {useStoreSprints} from "@/modules/sprints/useStoreSprints";
 
-const formatDate = (date: string | Date) => {
-  const formatter = new Intl.DateTimeFormat('ru-RU', {dateStyle: 'short'});
-  const formattedDate = formatter.format(date);
+export const lorem = `Lorem ipsum dolor sit amet,
+consectetur adipiscing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua.`;
 
-  return formattedDate
-}
-const arr = ['Беклог',
-  '1-й спринт', "2-й",
-]
-const {items, sort} = defineProps({
-  items: {
-    type: Array,
-    required: true
+const columnNames = ['Backlog', 'Doing', 'Finished', 'fff', 'gg'];
+
+const cardColors = [
+  '#34495E',
+  '#84B0DC',
+  '#49627A',
+  '#41B883',
+  '#7096BB',
+  '#97CAFC',
+  '#6CC1C0',
+  '#41B883',
+  '#41B883',
+  '#49627A',
+];
+
+const pickColor = () => {
+  const rand = Math.floor(Math.random() * 10);
+  return cardColors[rand];
+};
+
+export const generateItems = (count, creator) => {
+
+  const result = [];
+  for (let i = 0; i < count; i++) {
+    result.push(creator(i));
+  }
+  return result;
+};
+
+// storeSprints.stateSprints
+const storeSprints = useStoreSprints()
+const children = [
+  {
+    id: `1`,
+    type: 'container',
+    name: 'Беклог',
+    props: {
+      orientation: 'vertical',
+      className: 'card-container',
+    },
+    children: [
+      {
+        type: 'draggable',
+        id: `1`,
+        props: {
+          className: 'card',
+          style: {backgroundColor: 'gray'},
+        },
+        number: `Номер задачи 1`,
+        data: 'описание задачи22',
+      },
+      {
+        type: 'draggable',
+        id: `1`,
+        props: {
+          className: 'card',
+          style: {backgroundColor: 'gray'},
+        },
+        number: `Номер задачи 5`,
+        data: 'описание задачи22',
+      }
+    ],
   },
-  sort: {
-    type: Boolean,
-    default: false
+  {
+    id: `2`,
+    type: 'container',
+    name: 'Первый спринт',
+    props: {
+      orientation: 'vertical',
+      className: 'card-container',
+    },
+    children: [{
+      type: 'draggable',
+      id: `1`,
+      props: {
+        className: 'card',
+        style: {backgroundColor: 'gray'},
+      },
+      number: `Номер задачи 5`,
+      data: 'описание задачи22',
+    }],
+  },
+  {
+    id: `3`,
+    type: 'container',
+    name: 'Второй Спринт',
+    props: {
+      orientation: 'vertical',
+      className: 'card-container',
+    },
+    children: [{
+      type: 'draggable',
+      id: `1`,
+      props: {
+        className: 'card',
+        style: {backgroundColor: 'gray'},
+      },
+      number: `Номер задачи 5`,
+      data: 'описание задачи22',
+    }],
+  },
+];
+
+export const scene = {
+  type: 'container',
+  props: {
+    orientation: 'horizontal',
+  },
+  children: storeSprints.stateSprints,
+
+  // children: [
+  //   {
+  //     id: `column${0}`,
+  //     type: 'container',
+  //     name: columnNames[0],
+  //     props: {
+  //       orientation: 'vertical',
+  //       className: 'card-container',
+  //     },
+  //     children: [{
+  //       type: 'draggable',
+  //       id: `1`,
+  //       props: {
+  //         className: 'card',
+  //         style: {backgroundColor: 'gray'},
+  //       },
+  //       number: `Номер задачи 5`,
+  //       data: 'описание задач111',
+  //     }],
+  //   },
+  //   {
+  //     id: `column${1}`,
+  //     type: 'container',
+  //     name: columnNames[1],
+  //     props: {
+  //       orientation: 'vertical',
+  //       className: 'card-container',
+  //     },
+  //     children: [{
+  //       type: 'draggable',
+  //       id: `1`,
+  //       props: {
+  //         className: 'card',
+  //         style: {backgroundColor: 'gray'},
+  //       },
+  //       number: `Номер задачи 5`,
+  //       data: 'описание задачи22',
+  //     }],
+  //   },
+  //   {
+  //     id: `column${2}`,
+  //     type: 'container',
+  //     name: columnNames[2],
+  //     props: {
+  //       orientation: 'vertical',
+  //       className: 'card-container',
+  //     },
+  //     children: [{
+  //       type: 'draggable',
+  //       id: `1`,
+  //       props: {
+  //         className: 'card',
+  //         style: {backgroundColor: 'gray'},
+  //       },
+  //       number: `Номер задачи 5`,
+  //       data: 'описание задачи22',
+  //     }],
+  //   }
+  // ]
+};
+
+
+function applyDrag(arr, dragResult) {
+  const {removedIndex, addedIndex, payload} = dragResult;
+  if (removedIndex === null && addedIndex === null) return arr;
+
+  const result = [...arr];
+  let itemToAdd = payload;
+
+  if (removedIndex !== null) {
+    itemToAdd = result.splice(removedIndex, 1)[0];
   }
-})
 
-const getList = list => (items ? items.filter(item => item.list == list) : [])
+  if (addedIndex !== null) {
+    result.splice(addedIndex, 0, itemToAdd);
+  }
 
-const getItemById = event => {
-  const itemId = event.dataTransfer.getData('itemId')
-  const item = items.find(item => item.id == itemId)
-  return {item, itemId}
-}
+  return result;
+};
 
-const onOver = event => (sort ? event.target.classList.add('on-over') : '')
-const onLeave = event => (sort ? event.target.classList.remove('on-over') : '')
+export default {
+  name: "Cards",
 
-const onDropSort = (event, droppedItem) => {
-  if (!sort) return
-  onLeave(event)
-  const {item, itemId} = getItemById(event)
-  const itemPosition = items.findIndex(item => item.id == itemId)
-  const droppedItemPosition = items.findIndex(item => item.id == droppedItem.id)
-  items.splice(itemPosition, 1)
-  items.splice(droppedItemPosition, 0, item)
-}
+  components: {Container, Draggable},
 
-const startDrag = (event, item) => {
-  event.dataTransfer.dropEffect = 'move'
-  event.dataTransfer.effectAllowed = 'move'
-  event.dataTransfer.setData('itemId', item.id)
-}
+  data() {
+    return {
+      scene,
+      upperDropPlaceholderOptions: {
+        className: "cards-drop-preview",
+        animationDuration: "150",
+        showOnTop: true,
+      },
+      dropPlaceholderOptions: {
+        className: "drop-preview",
+        animationDuration: "150",
+        showOnTop: true,
+      },
+    };
+  },
 
-const onDrop = (event, list) => {
-  //тут будем отправлять запрос на бекенд
+  methods: {
+    onColumnDrop(dropResult) {
+      const scene = Object.assign({}, this.scene);
+      scene.children = applyDrag(scene.children, dropResult);
+      this.scene = scene;
+    },
 
-  const {item} = getItemById(event)
-  item.list = list
-}
+    onCardDrop(columnId, dropResult) {
+      if (dropResult.removedIndex !== null || dropResult.addedIndex !== null) {
+        const scene = Object.assign({}, this.scene);
+        const column = scene.children.filter((p) => p.id === columnId)[0];
+        const columnIndex = scene.children.indexOf(column);
+
+        const newColumn = Object.assign({}, column);
+        newColumn.children = applyDrag(newColumn.children, dropResult);
+        scene.children.splice(columnIndex, 1, newColumn);
+
+        this.scene = scene;
+      }
+    },
+
+    getCardPayload(columnId) {
+      return (index) => {
+        return this.scene.children.filter((p) => p.id === columnId)[0].children[
+            index
+            ];
+      };
+    },
+
+    dragStart() {
+      console.log("drag started");
+    },
+
+    log(...params) {
+      console.log(...params);
+    },
+  },
+};
 </script>
-
-<style lang="scss" scoped>
-.demo {
-  //max-width: 600px;
-  padding: 30px;
-  //display: flex;
-  //justify-content: space-between;
-  margin: 30px auto;
-  //background-color: var(--c-bg-card, #242424);
-  //color: var(--c-text, #ffffffde);
-  gap: 30px;
-  border-radius: 8px;
-  transition: background-color 0.3s ease;
-  margin-bottom: 15px;
-  @media (max-width: 768px) {
-    padding: 15px;
-    gap: 15px;
-    margin: 15px auto;
-  }
-
-  @media (max-width: 400px) {
-    flex-direction: column;
-  }
-}
-
-.drop-zone {
-  flex: 1 1 50%;
-  padding: 15px;
-  border: 1px solid var(--c-border, #363636);
-  border-radius: 8px;
-  margin-bottom: 15px;
-
-  h3 {
-    font-size: 18px;
-    margin-bottom: 15px;
-  }
-}
-
-.drag-el {
-  padding: 10px 15px;
-  //background-color: var(--c-border, #363636);
-  border: 1px solid var(--c-border, #363636);
-  border-radius: 8px;
-  cursor: grab;
-
-  &:not(:last-child) {
-    margin-bottom: 10px;
-  }
-}
-
-.on-over {
-  border-color: #33a06f;
-}
-</style>

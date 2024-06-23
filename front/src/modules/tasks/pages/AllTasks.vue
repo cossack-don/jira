@@ -7,7 +7,7 @@
   <div style="display: flex; flex-wrap: wrap">
 
 
-    <Card v-for="item in storeBacklog.stateBacklogTasks[0].list" :key="item.id"
+    <Card v-for="item in storeTasks.stateTasks" :key="item.id"
           :to="{name:'edit-task',params:{id:item.id}}"
           asLink
           style="margin-right: 15px;margin-top:15px">
@@ -39,10 +39,11 @@ import {ref} from "vue";
 import Modal from '../../../../pkgs/ui/Modal.vue'
 import {useStoreBacklog} from "@/modules/backlog/store/useStoreBacklog";
 import {useRoute, useRouter} from "vue-router";
+import {useStoreTasks} from "@/modules/tasks/useStoreTasks";
 
 
 // const listTasks = computed(() => storeBacklog.stateBacklogTasks.id === id ? storeListTasks.stateListTasks.list : [])
-
+const storeTasks = useStoreTasks()
 const route = useRoute()
 const storeBacklog = useStoreBacklog()
 const router = useRouter()

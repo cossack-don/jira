@@ -18,7 +18,7 @@
         @update:model-value="handlerUpdateField($event,'descriotion')"
     />
     <Input
-        :model-value="currentTask[0].storyPoint"
+        :model-value="currentTask[0]?.storyPoint"
         placeholder="Story Point"
         text-label="Story Points"
         @update:model-value="handlerUpdateField($event,'storyPoint')"
@@ -39,7 +39,7 @@
     />
 
     <Input
-        :model-value="currentTask[0].version"
+        :model-value="currentTask[0]?.version"
         placeholder="Version"
         text-label="Версия"
         type="number"
@@ -71,13 +71,13 @@ const currentTask = computed(() => storeTasks?.stateTasks.filter((el) => el.id =
 
 const pickedPriorityInSelect = ref({})
 onMounted(() => pickedPriorityInSelect.value = getCurrentObjectSelect2[0])
-const getCurrentObjectSelect2 = listPrioritySelect.filter((item) => item.value === currentTask.value[0].priority)
+const getCurrentObjectSelect2 = listPrioritySelect.filter((item) => item.value === currentTask.value[0]?.priority)
 const handlerUpdatePrioritySelect = (e) => Object.assign(currentTask.value[0], {priority: e.value})
 
 
 const selectedTypeTask = ref({})
 onMounted(() => selectedTypeTask.value = getCurrentObjectSelect[0])
-const getCurrentObjectSelect = typesTasksSelect.filter((item) => item.value === currentTask.value[0].typeTask)
+const getCurrentObjectSelect = typesTasksSelect.filter((item) => item.value === currentTask.value[0]?.typeTask)
 const handlerUpdateTypeTaskSelect = (e) => Object.assign(currentTask.value[0], {typeTask: e.value})
 
 

@@ -8,63 +8,84 @@ export const useStoreBacklog = defineStore('storeBacklog', () => {
     const stateBacklogTasks = ref(
         [
             {
-                list: storeTasks.stateTasks
-                // id: '4f1cb8d5b769686c6fff6d98ec8fbdac',
-                // list: [
-                //     ...,
-                //
-                //     {
-                //         "id": 0,
-                //         "title": "Item A",
-                //         "list": 0
-                //     },
-                //     {
-                //         "id": 1,
-                //         "title": "Item B",
-                //         "list": 1
-                //     },
-                //     {
-                //         "id": 2,
-                //         "title": "It22em C",
-                //         "list": 1
-                //     },
-                //     {
-                //         "id": 3,
-                //         "title": "Item D",
-                //         "list": 2
-                //     }
-                //
-                // ],
-
-            },
-            {
-                id: '1f1cb8d5b769686c1fff6d98ec8fbdac',
-                list: [
+                id: '1f1cb8d5b769686c1ff33f6d98ec8fbdac',
+                nameSprint: 'BACKLOG',
+                list: [{
+                    "nameTask": "Создать АПИ",
+                    "descriotion": "",
+                    "dateCreate": "2024-06-19T17:56:01.016Z",
+                    "storyPoint": "3",
+                    "priority": "medium",
+                    "status": "",
+                    "version": "",
+                    "tags": [],
+                    "typeTask": "epic",
+                    "id": 103,
+                    "title": "Item A",
+                    "list": 0
+                },
 
                     {
-                        "id": 0,
+                        "nameTask": "Создать АПИ",
+                        "descriotion": "",
+                        "dateCreate": "2024-06-19T17:56:01.016Z",
+                        "storyPoint": "3",
+                        "priority": "medium",
+                        "status": "",
+                        "version": "",
+                        "tags": [],
+                        "typeTask": "epic",
+                        "id": 12323,
                         "title": "Item A",
-                        "list": 0
-                    },
-                    {
-                        "id": 1,
-                        "title": "Item B",
                         "list": 1
                     },
                     {
-                        "id": 2,
-                        "title": "Item C",
-                        "list": 1
-                    },
-                    {
-                        "id": 3,
-                        "title": "Item D222",
+                        "nameTask": "Создать2 АПИ",
+                        "descriotion": "",
+                        "dateCreate": "2024-06-19T17:56:01.016Z",
+                        "storyPoint": "3",
+                        "priority": "medium",
+                        "status": "",
+                        "version": "",
+                        "tags": [],
+                        "typeTask": "epic",
+                        "id": 123,
+                        "title": "Item A",
                         "list": 2
+                    },
+                    {
+                        "nameTask": "Создать АПИ",
+                        "descriotion": "",
+                        "dateCreate": "2024-06-19T17:56:01.016Z",
+                        "storyPoint": "3",
+                        "priority": "medium",
+                        "status": "",
+                        "version": "",
+                        "tags": [],
+                        "typeTask": "epic",
+                        "id": 13,
+                        "title": "Item A",
+                        "list": 3
                     }
 
                 ],
+            },
+            {
+                id: '1f1cb8d5b769686c1fff6d9822ec8fbdac',
+                nameSprint: '2222',
 
-            }
+
+            }, {
+            id: '1f1cb8d5b769686c1fff6d98ec8fbdac',
+            nameSprint: '33333',
+
+
+        }, {
+            id: '1f1cb8d115b76219686c1fff6d98ec8fbdac',
+            nameSprint: '44444',
+     
+
+        }
         ])
 
     const addItemInEndState = (payload) => {
