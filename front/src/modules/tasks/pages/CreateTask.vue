@@ -1,15 +1,11 @@
 <script lang="ts" setup>
 import {computed, reactive, ref} from "vue";
 import {useRouter} from "vue-router";
-import {uid} from 'uid';
-import {useStoreBoards} from "@/modules/boards/store/useStoreBoards";
-import {LENGTH_UID} from "@/modules/boards/store/mockBoards";
 import Button from '../../../../pkgs/ui/Button.vue'
 import Select from '../../../../pkgs/ui/Select.vue'
 import Input from '../../../../pkgs/ui/Input.vue'
 import CheckBox from '../../../../pkgs/ui/CheckBox.vue'
 import TextArea from '../../../../pkgs/ui/TextArea.vue'
-import {useStoreBacklog} from "@/modules/backlog/store/useStoreBacklog";
 import {useStoreTasks} from "@/modules/tasks/useStoreTasks";
 import {statusesSelect} from "*/ui/statusesSelect";
 import {typesTasksSelect} from "*/ui/typesTasksSelect";
@@ -17,16 +13,6 @@ import {typesTasksSelect} from "*/ui/typesTasksSelect";
 const valueInput = ref('')
 const router = useRouter()
 
-const storeBoards = useStoreBoards()
-const handlerCreateBoard = () => {
-  const payload = {
-    id: uid(LENGTH_UID),
-    title: valueInput
-  }
-  storeBoards.handlerAddBoardInInitialState(payload)
-
-  router.push({name: 'boards'})
-}
 
 //
 const nameBoard = ref('')

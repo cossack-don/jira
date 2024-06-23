@@ -9,25 +9,7 @@ const router = createRouter({
             component: () => import('@/modules/auth/pages/index.vue')
         },
         {
-            path: '/boards',
-            name: 'boards',
-            component: () => import('@/modules/boards/pages/Boards.vue'),
-        },
-        {
-            path: '/boards/:id',
-            name: 'board',
-            component: () => import('@/modules/boards/[id]/Board.vue')
-        },
-
-        {
-            path: '/boards/create',
-            name: 'create-board',
-            component: () => import('@/modules/boards/pages/CreateBoard.vue')
-        },
-
-        {
-            path: '/sprints',
-            component: () => import('@/modules/backlog/index.vue'),
+            path: '',
             children: [
                 {
                     path: '/sprints',
@@ -48,8 +30,7 @@ const router = createRouter({
         },
 
         {
-            path: '/tasks',
-            component: () => import('@/modules/backlog/index.vue'),
+            path: '',
             children: [
                 {
                     path: '/tasks',

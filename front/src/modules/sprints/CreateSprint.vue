@@ -1,14 +1,11 @@
 <script lang="ts" setup>
 import {computed, reactive, ref} from "vue";
 import {useRouter} from "vue-router";
-import {uid} from 'uid';
-import {useStoreBoards} from "@/modules/boards/store/useStoreBoards";
-import {LENGTH_UID} from "@/modules/boards/store/mockBoards";
 import {Button, Select, Input, CheckBox} from '*/ui'
 import {useStoreSprints} from "@/modules/sprints/useStoreSprints";
 
 const router = useRouter()
-const storeBoards = useStoreBoards()
+
 const storeSprints = useStoreSprints()
 const handerCreateBoard = () => {
   console.log(dataForm)

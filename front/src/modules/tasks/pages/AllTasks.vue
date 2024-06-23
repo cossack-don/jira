@@ -33,11 +33,10 @@
 </template>
 <script lang="ts" setup>
 import {Card, Typography} from '*/ui'
-import ListDragAndDrop from '@/modules/backlog/components/ListDragAndDrop.vue'
+
 import Button from '../../../../pkgs/ui/Button.vue'
-import {ref} from "vue";
-import Modal from '../../../../pkgs/ui/Modal.vue'
-import {useStoreBacklog} from "@/modules/backlog/store/useStoreBacklog";
+
+
 import {useRoute, useRouter} from "vue-router";
 import {useStoreTasks} from "@/modules/tasks/useStoreTasks";
 
@@ -45,7 +44,7 @@ import {useStoreTasks} from "@/modules/tasks/useStoreTasks";
 // const listTasks = computed(() => storeBacklog.stateBacklogTasks.id === id ? storeListTasks.stateListTasks.list : [])
 const storeTasks = useStoreTasks()
 const route = useRoute()
-const storeBacklog = useStoreBacklog()
+
 const router = useRouter()
 const f = () => router.push({name: 'create-task'})
 

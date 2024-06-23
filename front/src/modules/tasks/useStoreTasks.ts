@@ -1,37 +1,18 @@
 import {ref} from 'vue'
 import {defineStore} from 'pinia'
+import {useStoreSprints} from "@/modules/sprints/useStoreSprints";
 
 
 export const useStoreTasks = defineStore('storeTasks', () => {
+    const storeSprints = useStoreSprints()
 
-    const stateTasks = ref([{
-        "nameTask": "two",
-        "descriotion": "",
-        "dateCreate": "2024-06-19T17:45:58.421Z",
-        "storyPoint": "0",
-        "priority": "",
-        "status": "",
-        "version": "",
-        "tags": [],
-        "typeTask": "",
-        "id": 33,
-        "title": "Item A",
-        "list": 0
-    },
-        {
-            "nameTask": "Создать АПИ",
-            "descriotion": "",
-            "dateCreate": "2024-06-19T17:56:01.016Z",
-            "storyPoint": "3",
-            "priority": "medium",
-            "status": "",
-            "version": "",
-            "tags": [],
-            "typeTask": "epic",
-            "id": 1,
-            "title": "Item A",
-            "list": 0
-        }])
+    let arr = []
+    storeSprints.stateSprints.forEach((item) => {
+
+        arr.push(...item.children)
+    })
+    const stateTasks = ref(arr)
+    
 
     const setStateTasks = (payload) => stateTasks.value.push(payload)
 

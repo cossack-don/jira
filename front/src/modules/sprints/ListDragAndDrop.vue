@@ -29,7 +29,7 @@
           >
             <Draggable v-for="card in column.children" :key="card.id" style="margin-bottom: 15px">
               <div :class="card.props.className" :style="card.props.style">
-                <h3>Task # {{ card.number }}</h3>
+                <h3>Task # {{ card.nameTask }}</h3>
                 <p class="card-text">{{ card.data }}</p>
               </div>
             </Draggable>

@@ -12,10 +12,10 @@
         @update:model-value="handlerUpdateField($event,'nameTask')"
     />
     <TextArea
-        :model-value="currentTask[0]?.comment"
+        :model-value="currentTask[0]?.description"
         placeholder="Описание задачи"
         text-label="Описание задачи"
-        @update:model-value="handlerUpdateField($event,'descriotion')"
+        @update:model-value="handlerUpdateField($event,'description')"
     />
     <Input
         :model-value="currentTask[0]?.storyPoint"
@@ -66,7 +66,7 @@ const storeTasks = useStoreTasks()
 const router = useRouter()
 const route = useRoute()
 
-const currentTask = computed(() => storeTasks?.stateTasks.filter((el) => el.id === Number(route.params.id)))
+const currentTask = computed(() => storeTasks?.stateTasks.filter((el) => el.id === route.params.id))
 
 
 const pickedPriorityInSelect = ref({})
