@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="padding: 25px">
     <Container
         :drop-placeholder="upperDropPlaceholderOptions"
         drag-handle-selector=".column-drag-handle"
@@ -8,29 +8,33 @@
         @drop="onColumnDrop($event)"
         @drag-start="dragStart"
     >
-      <pre>  {{ scene.children.id }}</pre>
-      <Draggable v-for="column in scene.children" :key="column.id" style="background: red;margin-bottom:15px">
+      <Draggable v-for="column in scene.children" :key="column.id"
+                 style="background: red;margin-bottom:15px;padding: 25px">
         <div :class="column.props.className">
-          <div class="card-column-header" @click="handlerEditSprint(column.id)">
-            <span class="column-drag-handle">&#x2630;</span>
-            {{ column.name }}
+          <div class="card-column-header" style="display: flex">
+            <div>
+              <span class="column-drag-handle">&#x2630;</span>
+              <span>Название Sprinta: {{ column.name }}</span>
+            </div>
+            <Button style="margin-left:auto" @click="handlerEditSprint(column.id)">Редактировать</Button>
           </div>
           <Container
               :drop-placeholder="dropPlaceholderOptions"
-
               :get-child-payload="getCardPayload(column.id)"
               drag-class="card-ghost"
               drop-class="card-ghost-drop"
               group-name="col"
-
               @drop="(e) => onCardDrop(column.id, e)"
               @drag-start="(e) => log('drag start', e)"
               @drag-end="(e) => log('drag end', e)"
+
           >
-            <Draggable v-for="card in column.children" :key="card.id" style="margin-bottom: 15px">
-              <div :class="card.props.className" :style="card.props.style">
-                <h3>Task # {{ card.nameTask }}</h3>
-                <p class="card-text">{{ card.data }}</p>
+            <Draggable v-for="card in column.children" :key="card.id"
+                       style="margin-bottom: 15px; margin-top: 15px;">
+              <div :class="card.props.className" :style="card.props.style" class="event-hover-drop"
+                   style="display: flex; align-items: center;padding: 10px; justify-content: space-between">
+                <h3>Название: {{ card.nameTask }}</h3>
+                <p class="card-text">SP - {{ card.storyPoint }}</p>
               </div>
             </Draggable>
           </Container>
@@ -41,6 +45,7 @@
 </template>
 
 <script>
+import {Button} from '*/ui'
 import {Container, Draggable} from "vue-dndrop";
 import {useStoreSprints} from "@/modules/sprints/useStoreSprints";
 import {useRouter} from "vue-router";
@@ -77,7 +82,7 @@ function applyDrag(arr, dragResult) {
 export default {
   name: "Cards",
 
-  components: {Container, Draggable},
+  components: {Container, Draggable, Button},
 
   data() {
     return {
@@ -139,3 +144,13 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.event-hover-drop {
+
+
+  &:hover {
+    cursor: move;
+  }
+}
+</style>

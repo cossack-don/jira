@@ -15,7 +15,7 @@ export const mock = [
                     className: 'card',
                     style: {backgroundColor: 'gray'},
                 },
-                nameTask: `Номер задачи 122`,
+                nameTask: `задачи 122`,
                 data: 'описание задачи22',
             },
             {
@@ -25,7 +25,7 @@ export const mock = [
                     className: 'card',
                     style: {backgroundColor: 'gray'},
                 },
-                nameTask: `Номер задачи 5`,
+                nameTask: `задачи 5`,
                 data: 'описание задачи22',
             }
         ],
@@ -55,7 +55,7 @@ export const mock = [
                     className: 'card',
                     style: {backgroundColor: 'gray'},
                 },
-                nameTask: `Номер задачи 5`,
+                nameTask: ` задачи 5`,
                 data: 'описание зadadaaадачи22',
             }
         ],

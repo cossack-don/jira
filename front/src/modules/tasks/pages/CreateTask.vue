@@ -9,6 +9,7 @@ import TextArea from '../../../../pkgs/ui/TextArea.vue'
 import {useStoreTasks} from "@/modules/tasks/useStoreTasks";
 import {statusesSelect} from "*/ui/statusesSelect";
 import {typesTasksSelect} from "*/ui/typesTasksSelect";
+import {useStoreSprints} from "@/modules/sprints/useStoreSprints";
 
 const valueInput = ref('')
 const router = useRouter()
@@ -119,15 +120,16 @@ const handlerCreateTask = () => {
   router.push({name: 'all-tasks'})
 }
 
+const storeSprints = useStoreSprints()
 
 </script>
 
 <template>
-  <section>
-    {{ storeTasks.stateTasks }}
-    <pre>{{ dataForm }}</pre>
+  <section style="display: flex;justify-content: center; align-items: center; height: 100vh">
 
-    <div>
+    <!--    <pre>{{ dataForm }}</pre>-->
+    2
+    <div class="wrapper-form">
       <Input
           :model-value="dataForm.nameBoard"
           placeholder="Название задачи"
@@ -174,3 +176,15 @@ const handlerCreateTask = () => {
     </div>
   </section>
 </template>
+
+<style lang="scss" scoped>
+.wrapper-form {
+  width: 400px;
+  background: gray;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+}
+</style>

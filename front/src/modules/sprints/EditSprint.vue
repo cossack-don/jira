@@ -29,4 +29,6 @@ const currentSprint = computed(() => {
 
   return storeSprints.stateSprints.filter((el) => el.id === route.params.id)[0]
 })
+
+
 </script>
